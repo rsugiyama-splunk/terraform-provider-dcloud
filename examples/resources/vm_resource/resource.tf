@@ -48,6 +48,13 @@ resource "dcloud_vm" "vm1" {
     name        = "Network adapter 0"
     mac_address = "00:50:56:00:01:AA"
     type        = "VIRTUAL_E1000"
+    assign_dhcp = true
+  }
+
+  dhcp_config {
+    default_gateway_ip = "198.18.1.1"
+    primary_dns_ip     = "198.18.128.1"
+    secondary_dns_ip   = "1.1.1.1"
   }
 
   network_interfaces {
