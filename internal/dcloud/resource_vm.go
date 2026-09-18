@@ -411,8 +411,9 @@ func extractVm(data *schema.ResourceData, ctx context.Context) tbclient.Vm {
 
 	if dhcpConfig := data.Get("dhcp_config"); dhcpConfig != nil && (len(dhcpConfig.([]interface{})) > 0) {
 		dc := dhcpConfig.([]interface{})[0].(map[string]interface{})
-		cfg := &tbclient.VmDhcpConfig{
-			DefaultGatewayIp: dc["default_gateway_ip"].(string),
+		cfg := &tbclient.VmDhcpConfig{}
+		if s := dc["default_gateway_ip"].(string); s != "" {
+			cfg.DefaultGatewayIp = &s
 		}
 		if s := dc["primary_dns_ip"].(string); s != "" {
 			cfg.PrimaryDnsIp = &s

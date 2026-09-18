@@ -348,7 +348,9 @@ func convertGuestAutomation(vm tbclient.Vm) []interface{} {
 func convertDhcpConfig(vm tbclient.Vm) []interface{} {
 	if dc := vm.DhcpConfig; dc != nil {
 		m := make(map[string]interface{})
-		m["default_gateway_ip"] = dc.DefaultGatewayIp
+		if dc.DefaultGatewayIp != nil {
+			m["default_gateway_ip"] = *dc.DefaultGatewayIp
+		}
 		if dc.PrimaryDnsIp != nil {
 			m["primary_dns_ip"] = *dc.PrimaryDnsIp
 		}
